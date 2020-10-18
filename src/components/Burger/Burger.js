@@ -1,7 +1,7 @@
 import React from 'react';
 
 import styles from './Burger.module.css';
-import BurgerIngredient from './BurrgerIngredient/BurgerIngredient';
+import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 
 const Burger = (props) => {
   const ingredientsOrder = props.ingredientsOrder; // [{ingredient: count}]
