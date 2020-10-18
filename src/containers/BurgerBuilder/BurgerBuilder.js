@@ -19,7 +19,7 @@ class BurgerBuilder extends Component {
       cheese: 0,
       meat: 0
     },
-    totalPrice: 0
+    totalPrice: 4.00
   };
 
   addIngredientHandler = (ingredient) => {
@@ -66,6 +66,7 @@ class BurgerBuilder extends Component {
           addIngredientHandler={this.addIngredientHandler}
           removeIngredientHandler={this.removeIngredientHandler}
           disabledIngredients={disabledIngredients()}
+          totalPrice={this.state.totalPrice}
         />
       </Aux>
     );
