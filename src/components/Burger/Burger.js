@@ -20,7 +20,11 @@ const Burger = (props) => {
       );
     }
 
-    return burgerIngredientComponents;
+    const noIngredientMessage = <p>Please add some ingredients!</p>;
+
+    return burgerIngredientComponents.length
+      ? burgerIngredientComponents
+      : noIngredientMessage;
   };
   return (
     <div className={styles.Burger}>
