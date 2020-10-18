@@ -17,15 +17,22 @@ const BuildControls = (props) => {
         key={control.label}
         label={control.label}
         addIngredientHandler={() => props.addIngredientHandler(control.type)}
-        removeIngredientHandler={() => props.removeIngredientHandler(control.type)}
-        disabled={props.disabledIngredients[(control.type)]}
+        removeIngredientHandler={() =>
+          props.removeIngredientHandler(control.type)
+        }
+        disabled={props.disabledIngredients[control.type]}
       />
     ));
 
   return (
     <div className={styles.BuildControls}>
-      <p>Current Price: <strong>${props.totalPrice.toFixed(2)}</strong></p>
+      <p>
+        Current Price: <strong>${props.totalPrice.toFixed(2)}</strong>
+      </p>
       {controls()}
+      <button className={styles.OrderButton} disabled={!props.orderAvailable}>
+        ORDER NOW!!
+      </button>
     </div>
   );
 };

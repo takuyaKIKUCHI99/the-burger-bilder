@@ -19,7 +19,15 @@ class BurgerBuilder extends Component {
       cheese: 0,
       meat: 0
     },
-    totalPrice: 4.00
+    totalPrice: 4.0
+  };
+
+  // If no ingredients added, order not available
+  orderAvailable = () => {
+    const numOfIngredients = Object.values(this.state.ingredients).reduce(
+      (acc, cur) => acc + cur
+    );
+    return numOfIngredients > 0;
   };
 
   addIngredientHandler = (ingredient) => {
@@ -52,12 +60,11 @@ class BurgerBuilder extends Component {
 
       for (const [key, value] of Object.entries(this.state.ingredients)) {
         const [ingredient, count] = [key, value];
-        disables[ingredient] = (count < 1);
+        disables[ingredient] = count < 1;
       }
 
       return disables;
     };
-
 
     return (
       <Aux>
@@ -67,6 +74,7 @@ class BurgerBuilder extends Component {
           removeIngredientHandler={this.removeIngredientHandler}
           disabledIngredients={disabledIngredients()}
           totalPrice={this.state.totalPrice}
+          orderAvailable={this.orderAvailable()}
         />
       </Aux>
     );
