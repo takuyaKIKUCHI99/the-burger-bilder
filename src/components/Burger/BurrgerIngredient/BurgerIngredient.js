@@ -14,7 +14,7 @@ const INGREDIENTS = {
 
 const BurgerIngredient = (props) => {
   const ingredientStyle = INGREDIENTS[props.type];
-  console.log(ingredientStyle);
+
   if (ingredientStyle === 'BreadTop') {
     return (
       <div className={styles[ingredientStyle]}>
