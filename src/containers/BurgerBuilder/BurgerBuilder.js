@@ -21,7 +21,8 @@ class BurgerBuilder extends Component {
       cheese: 0,
       meat: 0
     },
-    totalPrice: 4.0
+    totalPrice: 4.0,
+    modalShow: false
   };
 
   // If no ingredients added, order not available
@@ -56,6 +57,10 @@ class BurgerBuilder extends Component {
     });
   };
 
+  showModalHandler = () => {
+    this.setState({ modalShow: true });
+  };
+
   render() {
     const disabledIngredients = () => {
       const disables = {};
@@ -70,7 +75,7 @@ class BurgerBuilder extends Component {
 
     return (
       <Aux>
-        <Modal>
+        <Modal modalShow={this.state.modalShow} >
           <OrderSummary ingredientsOrder={this.state.ingredients} />
         </Modal>
         <Burger ingredientsOrder={this.state.ingredients} />
@@ -80,6 +85,7 @@ class BurgerBuilder extends Component {
           disabledIngredients={disabledIngredients()}
           totalPrice={this.state.totalPrice}
           orderAvailable={this.orderAvailable()}
+          showModalHandler={this.showModalHandler}
         />
       </Aux>
     );
