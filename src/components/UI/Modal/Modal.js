@@ -2,6 +2,9 @@ import React from 'react';
 
 import styles from './Modal.module.css';
 
+import Aux from '../../../hoc/Aux';
+import Backdrop from '../Backdrop/Backdrop';
+
 const Modal = (props) => {
   const translateStyle = {
     transform: props.modalShow ? 'translateY(0)' : 'translateY(-100vh)',
@@ -9,12 +12,15 @@ const Modal = (props) => {
   }
 
   return (
-    <div
-      className={styles.Modal}
-      style={translateStyle}
-    >
-      {props.children}
-    </div>
+    <Aux>
+      <Backdrop modalShow={props.modalShow} />
+      <div
+        className={styles.Modal}
+        style={translateStyle}
+      >
+        {props.children}
+      </div>
+    </Aux>
   );
 };
 
