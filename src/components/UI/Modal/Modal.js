@@ -9,15 +9,15 @@ const Modal = (props) => {
   const translateStyle = {
     transform: props.modalShow ? 'translateY(0)' : 'translateY(-100vh)',
     opacity: props.modalShow ? '1' : '0'
-  }
+  };
 
   return (
     <Aux>
-      <Backdrop modalShow={props.modalShow} />
-      <div
-        className={styles.Modal}
-        style={translateStyle}
-      >
+      <Backdrop
+        modalShow={props.modalShow}
+        closeModalHandler={props.closeModalHandler}
+      />
+      <div className={styles.Modal} style={translateStyle}>
         {props.children}
       </div>
     </Aux>

@@ -57,9 +57,9 @@ class BurgerBuilder extends Component {
     });
   };
 
-  showModalHandler = () => {
-    this.setState({ modalShow: true });
-  };
+  showModalHandler = () => this.setState({ modalShow: true });
+
+  closeModalHandler = () => this.setState({ modalShow: false });
 
   render() {
     const disabledIngredients = () => {
@@ -75,7 +75,9 @@ class BurgerBuilder extends Component {
 
     return (
       <Aux>
-        <Modal modalShow={this.state.modalShow} >
+        <Modal
+          modalShow={this.state.modalShow}
+          closeModalHandler={this.closeModalHandler}>
           <OrderSummary ingredientsOrder={this.state.ingredients} />
         </Modal>
         <Burger ingredientsOrder={this.state.ingredients} />
