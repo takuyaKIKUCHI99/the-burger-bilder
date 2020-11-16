@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Aux from '../../../hoc/Aux';
+import Button from '../../UI/Button/Button';
 
 const OrderSummary = (props) => {
   const capitalizeText = { textTransform: 'capitalize' };
@@ -26,6 +27,8 @@ const OrderSummary = (props) => {
       <p>A delicious burger with the following ingredients:</p>
       <ul>{ingredients()}</ul>
       <p>Continue to Checkout?</p>
+      <Button buttonType="Danger" clicked={props.closeModalHandler}>Cancel</Button>
+      <Button buttonType="Success" clicked={props.orderContinue}>Continue</Button>
     </Aux>
   );
 };
