@@ -1,12 +1,13 @@
+import { checkPropTypes } from 'prop-types';
 import React from 'react';
 
-import burgerLogo from '../../assets/images/burger-logo.png'
+import burgerLogo from '../../assets/images/burger-logo.png';
 
 import styles from './Logo.module.css';
 
-const Logo = () => (
-  <div className={styles.Logo}>
-    <img src={burgerLogo} alt="Burger logo" />
+const Logo = (props) => (
+  <div className={styles.Logo} style={{ height: props.height }}>
+    <img src={burgerLogo} alt='Burger logo' />
   </div>
 );
 

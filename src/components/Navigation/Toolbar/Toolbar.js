@@ -8,7 +8,7 @@ import styles from './Toolbar.module.css';
 const OrderSummary = (props) => (
   <header className={styles.Toolbar}>
     <div>MENU</div>
-    <Logo />
+    <Logo height="80%"/>
     <nav>
       <NavigationItem />
     </nav>
