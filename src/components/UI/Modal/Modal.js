@@ -14,8 +14,8 @@ const Modal = (props) => {
   return (
     <Aux>
       <Backdrop
-        modalShow={props.modalShow}
-        closeModalHandler={props.closeModalHandler}
+        show={props.modalShow}
+        closeHandler={props.closeModalHandler}
       />
       <div className={styles.Modal} style={translateStyle}>
         {props.children}
