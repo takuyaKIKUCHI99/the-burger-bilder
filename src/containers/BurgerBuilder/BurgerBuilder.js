@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 // Constants
 import { PRICES } from '../../constants';
@@ -9,92 +9,105 @@ import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 
-class BurgerBuilder extends Component {
-  state = {
-    ingredients: {
+const BurgerBuilder = () => {
+  // State
+  const [ingredients, setIngredients] = useState(
+    {
       salad: 0,
       bacon: 0,
       cheese: 0,
       meat: 0
-    },
-    totalPrice: 4.0,
-    modalShow: false
-  };
+    });
+  const [totalPrice, setTotalPrice] = useState(4.0);
+  const [modalShow, setModalShow] = useState(false);
+  const [isOrderAvailable, setIsOrderAvailable] = useState(false);
+  const [disabledIngredients, setDisabledIngredients] = useState(
+    {
+      salad: false,
+      bacon: false,
+      cheese: false,
+      meat: false
+    });
 
-  // If no ingredients added, order not available
-  orderAvailable = () => {
-    const numOfIngredients = Object.values(this.state.ingredients).reduce(
+  const numOfIngredients = useCallback(
+    () => Object.values(ingredients).reduce(
       (acc, cur) => acc + cur
-    );
-    return numOfIngredients > 0;
+    ), [ingredients]
+  );
+
+  // When there is no ingredients, 'isOrderAvailable' set as false
+  useEffect(() => {
+    setIsOrderAvailable(numOfIngredients() > 0);
+  }, [ingredients, numOfIngredients]);
+
+  // 'disable' property for each button of ingredients
+  useEffect(() => {
+    const disables = { ...disabledIngredients };
+    for (const [key, value] of Object.entries(ingredients)) {
+      const [ingredient, count] = [key, value];
+      disables[ingredient] = count < 1;
+    }
+    setDisabledIngredients(disables);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ingredients]);
+
+  /**
+   * @param {string} ingredient
+   */
+  const addIngredientHandler = (ingredient) => {
+    // Increment count
+    const updatedIngredients = { ...ingredients };
+    updatedIngredients[ingredient] += 1;
+    setIngredients(updatedIngredients);
+    // Add price
+    const updatedPrice = totalPrice + PRICES[ingredient];
+    setTotalPrice(updatedPrice);
   };
 
-  addIngredientHandler = (ingredient) => {
-    this.setState(({ ingredients, totalPrice }) => {
-      const updatedIngredients = { ...ingredients };
+  /**
+   * @param {string} ingredient
+   */
+  const removeIngredientHandler = (ingredient) => {
+    // Prevent to go negative
+    if (ingredients[ingredient] < 1) return;
 
-      updatedIngredients[ingredient] += 1;
-      const updatedPrice = totalPrice + PRICES[ingredient];
-
-      return { ingredients: updatedIngredients, totalPrice: updatedPrice };
-    });
+    // Decrement count
+    const updatedIngredients = { ...ingredients };
+    updatedIngredients[ingredient] -= 1;
+    setIngredients(updatedIngredients);
+    // Add price
+    const updatedPrice = totalPrice - PRICES[ingredient];
+    setTotalPrice(updatedPrice);
   };
 
-  removeIngredientHandler = (ingredient) => {
-    if (this.state.ingredients[ingredient] < 1) return;
+  const showModalHandler = () => setModalShow(true);
+  const closeModalHandler = () => setModalShow(false);
 
-    this.setState(({ ingredients, totalPrice }) => {
-      const updatedIngredients = { ...ingredients };
+  const orderContinue = () => alert("Continued!");
 
-      updatedIngredients[ingredient] -= 1;
-      const updatedPrice = totalPrice - PRICES[ingredient];
-
-      return { ingredients: updatedIngredients, totalPrice: updatedPrice };
-    });
-  };
-
-  showModalHandler = () => this.setState({ modalShow: true });
-
-  closeModalHandler = () => this.setState({ modalShow: false });
-
-  orderContinue = () => alert("Continued!");
-
-  render() {
-    const disabledIngredients = () => {
-      const disables = {};
-
-      for (const [key, value] of Object.entries(this.state.ingredients)) {
-        const [ingredient, count] = [key, value];
-        disables[ingredient] = count < 1;
-      }
-
-      return disables;
-    };
-
-    return (
-      <Aux>
-        <Modal
-          modalShow={this.state.modalShow}
-          closeModalHandler={this.closeModalHandler}>
-          <OrderSummary
-            ingredientsOrder={this.state.ingredients}
-            totalPrice={this.state.totalPrice}
-            closeModalHandler={this.closeModalHandler}
-            orderContinue={this.orderContinue}
-          />
-        </Modal>
-        <Burger ingredientsOrder={this.state.ingredients} />
-        <BuildControls
-          addIngredientHandler={this.addIngredientHandler}
-          removeIngredientHandler={this.removeIngredientHandler}
-          disabledIngredients={disabledIngredients()}
-          totalPrice={this.state.totalPrice}
-          orderAvailable={this.orderAvailable()}
-          showModalHandler={this.showModalHandler}
+  return (
+    <Aux>
+      <Modal
+        modalShow={modalShow}
+        closeModalHandler={closeModalHandler}>
+        <OrderSummary
+          ingredientsOrder={ingredients}
+          totalPrice={totalPrice}
+          closeModalHandler={closeModalHandler}
+          orderContinue={orderContinue}
         />
-      </Aux>
-    );
-  }
+      </Modal>
+      <Burger ingredientsOrder={ingredients} />
+      <BuildControls
+        addIngredientHandler={addIngredientHandler}
+        removeIngredientHandler={removeIngredientHandler}
+        disabledIngredients={disabledIngredients}
+        totalPrice={totalPrice}
+        orderAvailable={isOrderAvailable}
+        showModalHandler={showModalHandler}
+      />
+    </Aux>
+  );
 }
 
 export default BurgerBuilder;
