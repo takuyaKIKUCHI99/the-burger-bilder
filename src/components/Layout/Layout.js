@@ -7,13 +7,14 @@ import SideDrawer from '../Navigation/SideDrawer/SideDrawer';
 import styles from './Layout.module.css';
 
 const Layout = (props) => {
-  const [isSideDrawerOpen, setIsSideDrawerOpen] = useState(true);
+  const [isSideDrawerOpen, setIsSideDrawerOpen] = useState(false);
 
+  const openHandler = () => setIsSideDrawerOpen(true);
   const closeHandler = () => setIsSideDrawerOpen(false);
 
   return (
     <Aux>
-      <Toolbar />
+      <Toolbar openHandler={openHandler}/>
       <SideDrawer
         isOpen={isSideDrawerOpen}
         closeHandler={closeHandler}
