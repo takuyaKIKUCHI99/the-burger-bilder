@@ -7,7 +7,7 @@ import Logo from '../../Logo/Logo';
 import NavigationItems from '../NavigationItems/NavigationItems';
 import DrawerToggle from '../SideDrawer/DrawerToggle/DrawerToggle';
 
-const OrderSummary = ({ openHandler }) => (
+const Toolbar = ({ openHandler }) => (
   <header className={styles.Toolbar}>
     <DrawerToggle openHandler={openHandler} />
     <Logo height='80%' />
@@ -17,8 +17,8 @@ const OrderSummary = ({ openHandler }) => (
   </header>
 );
 
-OrderSummary.propTypes = {
+Toolbar.propTypes = {
   openHandler: Proptypes.func.isRequired
 };
 
-export default OrderSummary;
+export default Toolbar;

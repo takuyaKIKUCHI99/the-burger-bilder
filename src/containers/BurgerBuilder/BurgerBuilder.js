@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { , useEffect, useState } from 'react';
 
 // Constants
 import { PRICES } from '../../constants';
@@ -20,7 +20,6 @@ const BurgerBuilder = () => {
     });
   const [totalPrice, setTotalPrice] = useState(4.0);
   const [modalShow, setModalShow] = useState(false);
-  const [isOrderAvailable, setIsOrderAvailable] = useState(false);
   const [disabledIngredients, setDisabledIngredients] = useState(
     {
       salad: false,
@@ -29,16 +28,10 @@ const BurgerBuilder = () => {
       meat: false
     });
 
-  const numOfIngredients = useCallback(
-    () => Object.values(ingredients).reduce(
-      (acc, cur) => acc + cur
-    ), [ingredients]
-  );
-
   // When there is no ingredients, 'isOrderAvailable' set as false
-  useEffect(() => {
-    setIsOrderAvailable(numOfIngredients() > 0);
-  }, [ingredients, numOfIngredients]);
+  const numOfIngredients = () => Object.values(ingredients).reduce(
+      (acc, cur) => acc + cur
+    );
 
   // 'disable' property for each button of ingredients
   useEffect(() => {
@@ -103,7 +96,7 @@ const BurgerBuilder = () => {
         removeIngredientHandler={removeIngredientHandler}
         disabledIngredients={disabledIngredients}
         totalPrice={totalPrice}
-        orderAvailable={isOrderAvailable}
+        orderAvailable={numOfIngredients() > 0}
         showModalHandler={showModalHandler}
       />
     </Aux>
