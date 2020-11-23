@@ -1,11 +1,8 @@
-// React libraries
 import React, { useState } from 'react';
 import Proptypes from 'prop-types';
 
-// Style
 import styles from './Layout.module.css';
 
-// Components
 import Aux from '../../hoc/Aux';
 import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
 import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';

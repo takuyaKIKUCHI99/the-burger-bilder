@@ -1,4 +1,5 @@
 import React from 'react';
+import Proptypes from 'prop-types';
 
 import styles from './DrawerToggle.module.css';
 
@@ -9,5 +10,9 @@ const DrawerToggle = ({ openHandler }) => (
     <div></div>
   </div>
 );
+
+DrawerToggle.propTypes = {
+  openHandler: Proptypes.func.isRequired
+};
 
 export default DrawerToggle;

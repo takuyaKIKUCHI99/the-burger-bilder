@@ -1,14 +1,19 @@
 import { checkPropTypes } from 'prop-types';
 import React from 'react';
-
-import burgerLogo from '../../assets/images/burger-logo.png';
+import Proptypes from 'prop-types';
 
 import styles from './Logo.module.css';
 
-const Logo = (props) => (
-  <div className={styles.Logo} style={{ height: props.height }}>
+import burgerLogo from '../../assets/images/burger-logo.png';
+
+const Logo = ({ height }) => (
+  <div className={styles.Logo} style={{ height: height }}>
     <img src={burgerLogo} alt='Burger logo' />
   </div>
 );
+
+Logo.propTypes = {
+  height: Proptypes.string.isRequired
+};
 
 export default Logo;

@@ -1,16 +1,18 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import styles from './Burger.module.css';
+
 import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 
-const Burger = (props) => {
-  const ingredientsOrder = props.ingredientsOrder; // [{ingredient: count}]
+const Burger = ({ ingredientsOrder }) => {
+  const orders = { ...ingredientsOrder }; // [{ingredient: count}]
 
   const ingredients = () => {
     const burgerIngredientComponents = [];
 
     // Build 'BurgerIngredient' component as per the passed order
-    for (const [key, value] of Object.entries(ingredientsOrder)) {
+    for (const [key, value] of Object.entries(orders)) {
       const [ingredient, count] = [key, value];
 
       [...Array(count)].forEach((_, index) =>
@@ -33,6 +35,10 @@ const Burger = (props) => {
       <BurgerIngredient type='bread-bottom' />
     </div>
   );
+};
+
+Burger.propTypes = {
+  ingredientsOrder: PropTypes.object.isRequired
 };
 
 export default Burger;

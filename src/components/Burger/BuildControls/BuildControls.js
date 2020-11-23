@@ -1,44 +1,56 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import styles from './BuildControls.module.css';
+
+import { CONTROLS } from '../../../constants';
+
 import BuildControl from './BuildControl/BuildControl';
 
-const CONTROLS = [
-  { label: 'Salad', type: 'salad' },
-  { label: 'Bacon', type: 'bacon' },
-  { label: 'Cheese', type: 'cheese' },
-  { label: 'Meat', type: 'meat' }
-];
-
-const BuildControls = (props) => {
+const BuildControls = ({
+  addIngredientHandler,
+  removeIngredientHandler,
+  disabledIngredients,
+  totalPrice,
+  orderAvailable,
+  showModalHandler
+}) => {
   const controls = () =>
     CONTROLS.map((control) => (
       <BuildControl
         key={control.label}
         label={control.label}
-        addIngredientHandler={() => props.addIngredientHandler(control.type)}
+        addIngredientHandler={() => addIngredientHandler(control.type)}
         removeIngredientHandler={() =>
-          props.removeIngredientHandler(control.type)
+          removeIngredientHandler(control.type)
         }
-        disabled={props.disabledIngredients[control.type]}
+        disabled={disabledIngredients[control.type]}
       />
     ));
 
   return (
     <div className={styles.BuildControls}>
       <p>
-        Current Price: <strong>${props.totalPrice.toFixed(2)}</strong>
+        Current Price: <strong>${totalPrice.toFixed(2)}</strong>
       </p>
       {controls()}
       <button
         className={styles.OrderButton}
-        disabled={!props.orderAvailable}
-        onClick={props.showModalHandler}
-      >
+        disabled={!orderAvailable}
+        onClick={showModalHandler}>
         ORDER NOW!!
       </button>
     </div>
   );
+};
+
+BuildControls.propTypes = {
+  addIngredientHandler: PropTypes.func.isRequired,
+  removeIngredientHandler: PropTypes.func.isRequired,
+  disabledIngredients: PropTypes.object.isRequired,
+  totalPrice: PropTypes.number.isRequired,
+  orderAvailable: PropTypes.bool.isRequired,
+  showModalHandler: PropTypes.func.isRequired
 };
 
 export default BuildControls;

@@ -3,17 +3,10 @@ import PropTypes from 'prop-types';
 
 import styles from './BurgerIngredient.module.css';
 
-const INGREDIENTS = {
-  'bread-bottom': 'BreadBottom',
-  'bread-top': 'BreadTop',
-  meat: 'Meat',
-  cheese: 'Cheese',
-  salad: 'Salad',
-  bacon: 'Bacon'
-};
+import { INGREDIENTS } from '../../../constants';
 
-const BurgerIngredient = (props) => {
-  const ingredientStyle = INGREDIENTS[props.type];
+const BurgerIngredient = ({ type }) => {
+  const ingredientStyle = INGREDIENTS[type];
 
   if (ingredientStyle === 'BreadTop') {
     return (
