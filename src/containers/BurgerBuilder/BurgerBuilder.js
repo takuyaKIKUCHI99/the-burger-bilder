@@ -78,7 +78,7 @@ const BurgerBuilder = () => {
   const closeModalHandler = () => setModalShow(false);
 
   const orderContinue = () => {
-    axios.post('/orders', {
+    axios.post('/orders.json', {
       ingredients,
       price: totalPrice
     }).then((response) => {

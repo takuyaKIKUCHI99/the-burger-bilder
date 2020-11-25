@@ -1,6 +1,6 @@
 import { checkPropTypes } from 'prop-types';
 import React from 'react';
-import Proptypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import styles from './Logo.module.css';
 
@@ -13,7 +13,7 @@ const Logo = ({ height }) => (
 );
 
 Logo.propTypes = {
-  height: Proptypes.string.isRequired
+  height: PropTypes.string.isRequired
 };
 
 export default Logo;
