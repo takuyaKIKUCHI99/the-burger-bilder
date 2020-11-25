@@ -1,10 +1,3 @@
-const CONTROLS = [
-  { label: 'Salad', type: 'salad' },
-  { label: 'Bacon', type: 'bacon' },
-  { label: 'Cheese', type: 'cheese' },
-  { label: 'Meat', type: 'meat' }
-];
-
 const INGREDIENTS = {
   'bread-bottom': 'BreadBottom',
   'bread-top': 'BreadTop',
@@ -22,7 +15,6 @@ const PRICES = {
 };
 
 export {
-  CONTROLS,
   INGREDIENTS,
   PRICES
 };

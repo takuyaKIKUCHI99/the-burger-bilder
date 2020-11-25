@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import axios from '../../axios-orders';
 
@@ -21,29 +21,6 @@ const BurgerBuilder = () => {
     });
   const [totalPrice, setTotalPrice] = useState(4.0);
   const [modalShow, setModalShow] = useState(false);
-  const [disabledIngredients, setDisabledIngredients] = useState(
-    {
-      salad: false,
-      bacon: false,
-      cheese: false,
-      meat: false
-    });
-
-  // When there is no ingredients, 'isOrderAvailable' set as false
-  const numOfIngredients = () => Object.values(ingredients).reduce(
-      (acc, cur) => acc + cur
-    );
-
-  // 'disable' property for each button of ingredients
-  useEffect(() => {
-    const disables = { ...disabledIngredients };
-    for (const [key, value] of Object.entries(ingredients)) {
-      const [ingredient, count] = [key, value];
-      disables[ingredient] = count < 1;
-    }
-    setDisabledIngredients(disables);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ingredients]);
 
   /**
    * @param {string} ingredient
@@ -104,9 +81,8 @@ const BurgerBuilder = () => {
       <BuildControls
         addIngredientHandler={addIngredientHandler}
         removeIngredientHandler={removeIngredientHandler}
-        disabledIngredients={disabledIngredients}
         totalPrice={totalPrice}
-        orderAvailable={numOfIngredients() > 0}
+        ingredients={ingredients}
         showModalHandler={showModalHandler}
       />
     </Aux>

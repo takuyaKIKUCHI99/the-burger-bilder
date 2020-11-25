@@ -3,30 +3,34 @@ import PropTypes from 'prop-types';
 
 import styles from './BuildControls.module.css';
 
-import { CONTROLS } from '../../../constants';
-
 import BuildControl from './BuildControl/BuildControl';
 
 const BuildControls = ({
   addIngredientHandler,
   removeIngredientHandler,
-  disabledIngredients,
   totalPrice,
-  orderAvailable,
+  ingredients,
   showModalHandler
 }) => {
+  // When there is no ingredients, "Order" button is disabled
+  const numOfIngredients = () =>
+    Object.values(ingredients).reduce((acc, cur) => acc + cur);
+
   const controls = () =>
-    CONTROLS.map((control) => (
-      <BuildControl
-        key={control.label}
-        label={control.label}
-        addIngredientHandler={() => addIngredientHandler(control.type)}
-        removeIngredientHandler={() =>
-          removeIngredientHandler(control.type)
-        }
-        disabled={disabledIngredients[control.type]}
-      />
-    ));
+    Object.keys(ingredients).map((ingredient) => {
+      const capitalizeFirstLetter = (letters) =>
+        letters.charAt(0).toUpperCase() + letters.slice(1);
+
+      return (
+        <BuildControl
+          key={capitalizeFirstLetter(ingredient)}
+          label={capitalizeFirstLetter(ingredient)}
+          addIngredientHandler={() => addIngredientHandler(ingredient)}
+          removeIngredientHandler={() => removeIngredientHandler(ingredient)}
+          disabled={ingredients[ingredient] < 1}
+        />
+      );
+    });
 
   return (
     <div className={styles.BuildControls}>
@@ -36,7 +40,7 @@ const BuildControls = ({
       {controls()}
       <button
         className={styles.OrderButton}
-        disabled={!orderAvailable}
+        disabled={!numOfIngredients() > 0}
         onClick={showModalHandler}>
         ORDER NOW!!
       </button>
@@ -47,9 +51,8 @@ const BuildControls = ({
 BuildControls.propTypes = {
   addIngredientHandler: PropTypes.func.isRequired,
   removeIngredientHandler: PropTypes.func.isRequired,
-  disabledIngredients: PropTypes.object.isRequired,
   totalPrice: PropTypes.number.isRequired,
-  orderAvailable: PropTypes.bool.isRequired,
+  ingredients: PropTypes.object.isRequired,
   showModalHandler: PropTypes.func.isRequired
 };
 
