@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
-// Constants
+import axios from '../../axios-orders';
+
 import { PRICES } from '../../constants';
 
 import Aux from '../../hoc/Aux';
@@ -76,7 +77,16 @@ const BurgerBuilder = () => {
   const showModalHandler = () => setModalShow(true);
   const closeModalHandler = () => setModalShow(false);
 
-  const orderContinue = () => alert("Continued!");
+  const orderContinue = () => {
+    axios.post('/orders', {
+      ingredients,
+      price: totalPrice
+    }).then((response) => {
+      console.log(response);
+    }).catch((error) => {
+      console.log(error);
+    })
+  }
 
   return (
     <Aux>
