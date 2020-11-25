@@ -9,18 +9,19 @@ import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
+import Backdrop from '../../components/UI/Backdrop/Backdrop';
+import Button from '../../components/UI/Button/Button';
 
 const BurgerBuilder = () => {
   // State
-  const [ingredients, setIngredients] = useState(
-    {
-      salad: 0,
-      bacon: 0,
-      cheese: 0,
-      meat: 0
-    });
+  const [ingredients, setIngredients] = useState({
+    salad: 0,
+    bacon: 0,
+    cheese: 0,
+    meat: 0
+  });
   const [totalPrice, setTotalPrice] = useState(4.0);
-  const [modalShow, setModalShow] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   /**
    * @param {string} ingredient
@@ -51,32 +52,49 @@ const BurgerBuilder = () => {
     setTotalPrice(updatedPrice);
   };
 
-  const showModalHandler = () => setModalShow(true);
-  const closeModalHandler = () => setModalShow(false);
+  const showModalHandler = () => setIsModalOpen(true);
+  const closeModalHandler = () => setIsModalOpen(false);
 
   const orderContinue = () => {
-    axios.post('/orders.json', {
-      ingredients,
-      price: totalPrice
-    }).then((response) => {
-      console.log(response);
-    }).catch((error) => {
-      console.log(error);
-    })
-  }
+    axios
+      .post('/orders.json', {
+        ingredients,
+        price: totalPrice
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  // JSX
+  const orderSummaryModal = () => (
+    <Modal
+      isModalOpen={isModalOpen}
+      backdrop={
+        <Backdrop
+          isOpen={isModalOpen}
+          closeHandler={closeModalHandler}
+        />
+      }
+      orderSummary={
+        <OrderSummary order={ingredients} totalPrice={totalPrice}>
+          <Button buttonType='Danger' clicked={closeModalHandler}>
+            Cancel
+          </Button>
+          <Button buttonType='Success' clicked={orderContinue}>
+            Continue
+          </Button>
+        </OrderSummary>
+      }
+    />
+  );
 
   return (
     <Aux>
-      <Modal
-        modalShow={modalShow}
-        closeModalHandler={closeModalHandler}>
-        <OrderSummary
-          ingredientsOrder={ingredients}
-          totalPrice={totalPrice}
-          closeModalHandler={closeModalHandler}
-          orderContinue={orderContinue}
-        />
-      </Modal>
+      {orderSummaryModal()}
       <Burger ingredientsOrder={ingredients} />
       <BuildControls
         addIngredientHandler={addIngredientHandler}
@@ -87,6 +105,6 @@ const BurgerBuilder = () => {
       />
     </Aux>
   );
-}
+};
 
 export default BurgerBuilder;

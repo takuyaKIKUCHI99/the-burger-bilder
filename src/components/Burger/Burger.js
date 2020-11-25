@@ -6,13 +6,13 @@ import styles from './Burger.module.css';
 import BurgerIngredient from './BurgerIngredient/BurgerIngredient';
 
 const Burger = ({ ingredientsOrder }) => {
-  const orders = { ...ingredientsOrder }; // [{ingredient: count}]
+  const order = { ...ingredientsOrder }; // [{ingredient: count}]
 
   const ingredients = () => {
     const burgerIngredientComponents = [];
 
     // Build 'BurgerIngredient' component as per the passed order
-    for (const [key, value] of Object.entries(orders)) {
+    for (const [key, value] of Object.entries(order)) {
       const [ingredient, count] = [key, value];
 
       [...Array(count)].forEach((_, index) =>

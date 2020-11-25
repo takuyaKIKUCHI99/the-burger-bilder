@@ -3,11 +3,13 @@ import PropTypes from 'prop-types';
 
 import styles from './Backdrop.module.css';
 
-const Backdrop = ({ show, closeHandler }) =>
-  show ? <div className={styles.Backdrop} onClick={closeHandler} /> : null;
+const Backdrop = ({ isOpen, closeHandler }) =>
+  isOpen ? (
+    <div className={styles.Backdrop} onClick={closeHandler} />
+  ) : null;
 
 Backdrop.propTypes = {
-  show: PropTypes.bool.isRequired,
+  isOpen: PropTypes.bool.isRequired,
   closeHandler: PropTypes.func.isRequired
 };
 

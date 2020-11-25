@@ -4,28 +4,27 @@ import PropTypes from 'prop-types';
 import styles from './Modal.module.css';
 
 import Aux from '../../../hoc/Aux';
-import Backdrop from '../Backdrop/Backdrop';
 
-const Modal = ({ modalShow, closeModalHandler, children }) => {
+const Modal = ({ isModalOpen, backdrop, orderSummary }) => {
   const translateStyle = {
-    transform: modalShow ? 'translateY(0)' : 'translateY(-100vh)',
-    opacity: modalShow ? '1' : '0'
+    transform: isModalOpen ? 'translateY(0)' : 'translateY(-100vh)',
+    opacity: isModalOpen ? '1' : '0'
   };
 
   return (
     <Aux>
-      <Backdrop show={modalShow} closeHandler={closeModalHandler} />
+      {backdrop}
       <div className={styles.Modal} style={translateStyle}>
-        {children}
+        {orderSummary}
       </div>
     </Aux>
   );
 };
 
 Modal.propTypes = {
-  modalShow: PropTypes.bool.isRequired,
-  closeModalHandler: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired
+  isModalOpen: PropTypes.bool.isRequired,
+  backdrop: PropTypes.node.isRequired,
+  orderSummary: PropTypes.node.isRequired,
 };
 
 export default Modal;

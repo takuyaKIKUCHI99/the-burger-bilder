@@ -1,5 +1,5 @@
 import React from 'react';
-import Proptypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import styles from './DrawerToggle.module.css';
 
@@ -12,7 +12,7 @@ const DrawerToggle = ({ openHandler }) => (
 );
 
 DrawerToggle.propTypes = {
-  openHandler: Proptypes.func.isRequired
+  openHandler: PropTypes.func.isRequired
 };
 
 export default DrawerToggle;

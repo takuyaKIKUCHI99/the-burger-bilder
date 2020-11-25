@@ -1,5 +1,5 @@
 import React from 'react';
-import Proptypes from 'prop-types';
+import PropTypes from 'prop-types';
 
 import styles from './NavigationItem.module.css';
 
@@ -12,9 +12,9 @@ const NavigationItem = ({ link, active, children }) => (
 );
 
 NavigationItem.propTypes = {
-  link: Proptypes.string.isRequired,
-  active: Proptypes.bool,
-  children: Proptypes.node.isRequired
+  link: PropTypes.string.isRequired,
+  active: PropTypes.bool,
+  children: PropTypes.node.isRequired
 };
 
 NavigationItem.defaultProps = {
