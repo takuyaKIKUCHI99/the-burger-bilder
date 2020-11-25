@@ -3,22 +3,14 @@ import Proptypes from 'prop-types';
 
 import styles from './Toolbar.module.css';
 
-import Logo from '../../Logo/Logo';
-import NavigationItems from '../NavigationItems/NavigationItems';
-import DrawerToggle from '../SideDrawer/DrawerToggle/DrawerToggle';
-
-const Toolbar = ({ openHandler }) => (
+const Toolbar = ({ children }) => (
   <header className={styles.Toolbar}>
-    <DrawerToggle openHandler={openHandler} />
-    <Logo height='80%' />
-    <nav className={styles.DesktopOnly}>
-      <NavigationItems />
-    </nav>
+    {children}
   </header>
 );
 
 Toolbar.propTypes = {
-  openHandler: Proptypes.func.isRequired
+  children: Proptypes.node.isRequired
 };
 
 export default Toolbar;
