@@ -11,6 +11,7 @@ import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import Backdrop from '../../components/UI/Backdrop/Backdrop';
 import Button from '../../components/UI/Button/Button';
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 const BurgerBuilder = () => {
   // State
@@ -22,6 +23,7 @@ const BurgerBuilder = () => {
   });
   const [totalPrice, setTotalPrice] = useState(4.0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   /**
    * @param {string} ingredient
@@ -56,16 +58,20 @@ const BurgerBuilder = () => {
   const closeModalHandler = () => setIsModalOpen(false);
 
   const orderContinue = () => {
+    setIsLoading(true);
+
     axios
       .post('/orders.json', {
         ingredients,
         price: totalPrice
       })
       .then((response) => {
-        console.log(response);
+        setIsLoading(false);
+        setIsModalOpen(false);
       })
       .catch((error) => {
-        console.log(error);
+        setIsLoading(false);
+        setIsModalOpen(false);
       });
   };
 
@@ -74,20 +80,21 @@ const BurgerBuilder = () => {
     <Modal
       isModalOpen={isModalOpen}
       backdrop={
-        <Backdrop
-          isOpen={isModalOpen}
-          closeHandler={closeModalHandler}
-        />
+        <Backdrop isOpen={isModalOpen} closeHandler={closeModalHandler} />
       }
       orderSummary={
-        <OrderSummary order={ingredients} totalPrice={totalPrice}>
-          <Button buttonType='Danger' clicked={closeModalHandler}>
-            Cancel
-          </Button>
-          <Button buttonType='Success' clicked={orderContinue}>
-            Continue
-          </Button>
-        </OrderSummary>
+        isLoading ? (
+          <Spinner />
+        ) : (
+          <OrderSummary order={ingredients} totalPrice={totalPrice}>
+            <Button buttonType='Danger' clicked={closeModalHandler}>
+              Cancel
+            </Button>
+            <Button buttonType='Success' clicked={orderContinue}>
+              Continue
+            </Button>
+          </OrderSummary>
+        )
       }
     />
   );
