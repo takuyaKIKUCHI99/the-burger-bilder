@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import axios from '../../axios-orders';
 
-import { PRICES } from '../../constants';
+import { BURGER_BASE, PRICES } from '../../constants';
 
 import Aux from '../../hoc/Aux';
 import Burger from '../../components/Burger/Burger';
@@ -15,12 +15,7 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 
 const BurgerBuilder = () => {
   // State
-  const [ingredients, setIngredients] = useState({
-    salad: 0,
-    bacon: 0,
-    cheese: 0,
-    meat: 0
-  });
+  const [ingredients, setIngredients] = useState(BURGER_BASE);
   const [totalPrice, setTotalPrice] = useState(4.0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -68,6 +63,7 @@ const BurgerBuilder = () => {
       .then((response) => {
         setIsLoading(false);
         setIsModalOpen(false);
+        setIngredients(BURGER_BASE); // Reset burger order
       })
       .catch((error) => {
         setIsLoading(false);

@@ -1,3 +1,10 @@
+const BURGER_BASE = {
+  salad: 0,
+  bacon: 0,
+  cheese: 0,
+  meat: 0
+}
+
 const INGREDIENTS = {
   'bread-bottom': 'BreadBottom',
   'bread-top': 'BreadTop',
@@ -15,6 +22,7 @@ const PRICES = {
 };
 
 export {
+  BURGER_BASE,
   INGREDIENTS,
   PRICES
 };
