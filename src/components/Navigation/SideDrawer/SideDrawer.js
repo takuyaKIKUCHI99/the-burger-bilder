@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Aux from '../../../hoc/Aux';
 import Logo from '../../Logo/Logo';
 import NavigationItems from '../NavigationItems/NavigationItems';
 
@@ -12,7 +11,7 @@ const SideDrawer = ({ children, isOpen }) => {
   const attachedStyles = [styles.SideDrawer, isOpenStyle];
 
   return (
-    <Aux>
+    <>
       {children}
       <div className={attachedStyles.join(' ')}>
         <Logo height='11%' />
@@ -20,7 +19,7 @@ const SideDrawer = ({ children, isOpen }) => {
           <NavigationItems />
         </nav>
       </div>
-    </Aux>
+    </>
   );
 };
 

@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 
 import styles from './Modal.module.css';
 
-import Aux from '../../../hoc/Aux';
-
 const Modal = ({ isModalOpen, backdrop, orderSummary }) => {
   const translateStyle = {
     transform: isModalOpen ? 'translateY(0)' : 'translateY(-100vh)',
@@ -12,12 +10,12 @@ const Modal = ({ isModalOpen, backdrop, orderSummary }) => {
   };
 
   return (
-    <Aux>
+    <>
       {backdrop}
       <div className={styles.Modal} style={translateStyle}>
         {orderSummary}
       </div>
-    </Aux>
+    </>
   );
 };
 

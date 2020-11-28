@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 
 import axios from '../../axios-orders';
 
-import { BURGER_BASE, PRICES } from '../../constants';
+import { BURGER_BASE, PRICES } from '../../utils/constants';
 
-import Aux from '../../hoc/Aux';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
@@ -14,12 +13,13 @@ import Button from '../../components/UI/Button/Button';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
 const BurgerBuilder = () => {
-  // State
+  // ------------ States --------------
   const [ingredients, setIngredients] = useState(BURGER_BASE);
   const [totalPrice, setTotalPrice] = useState(4.0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  // ----------- Handlers ------------
   /**
    * @param {string} ingredient
    */
@@ -52,7 +52,7 @@ const BurgerBuilder = () => {
   const showModalHandler = () => setIsModalOpen(true);
   const closeModalHandler = () => setIsModalOpen(false);
 
-  const orderContinue = () => {
+  const orderHandler = () => {
     setIsLoading(true);
 
     axios
@@ -68,10 +68,11 @@ const BurgerBuilder = () => {
       .catch((error) => {
         setIsLoading(false);
         setIsModalOpen(false);
+        alert(error);
       });
   };
 
-  // JSX
+  // --------- JSX ------------
   const orderSummaryModal = () => (
     <Modal
       isModalOpen={isModalOpen}
@@ -86,7 +87,7 @@ const BurgerBuilder = () => {
             <Button buttonType='Danger' clicked={closeModalHandler}>
               Cancel
             </Button>
-            <Button buttonType='Success' clicked={orderContinue}>
+            <Button buttonType='Success' clicked={orderHandler}>
               Continue
             </Button>
           </OrderSummary>
@@ -96,7 +97,7 @@ const BurgerBuilder = () => {
   );
 
   return (
-    <Aux>
+    <>
       {orderSummaryModal()}
       <Burger ingredientsOrder={ingredients} />
       <BuildControls
@@ -106,7 +107,7 @@ const BurgerBuilder = () => {
         ingredients={ingredients}
         showModalHandler={showModalHandler}
       />
-    </Aux>
+    </>
   );
 };
 

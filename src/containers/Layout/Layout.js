@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import styles from './Layout.module.css';
 
-import Aux from '../../hoc/Aux';
 import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
 import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
 import DrawerToggle from '../../components/Navigation/SideDrawer/DrawerToggle/DrawerToggle';
@@ -18,7 +17,7 @@ const Layout = ({ children }) => {
   const closeSideDrawerHandler = () => setIsSideDrawerOpen(false);
 
   return (
-    <Aux>
+    <>
       <Toolbar>
         <DrawerToggle openHandler={openSideDrawerHandler} />
       </Toolbar>
@@ -26,7 +25,7 @@ const Layout = ({ children }) => {
         <Backdrop isOpen={isSideDrawerOpen} closeHandler={closeSideDrawerHandler} />
       </SideDrawer>
       <main className={styles.Content}>{children}</main>
-    </Aux>
+    </>
   );
 };
 

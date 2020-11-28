@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import styles from './BurgerIngredient.module.css';
 
-import { INGREDIENTS } from '../../../constants';
+import { INGREDIENTS } from '../../../utils/constants';
 
 const BurgerIngredient = ({ type }) => {
   const ingredientStyle = INGREDIENTS[type];

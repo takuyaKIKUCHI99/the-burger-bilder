@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Aux from '../../../hoc/Aux';
-
 const OrderSummary = ({ children, order, totalPrice }) => {
   const capitalizeText = { textTransform: 'capitalize' };
 
@@ -22,7 +20,7 @@ const OrderSummary = ({ children, order, totalPrice }) => {
   };
 
   return (
-    <Aux>
+    <>
       <h3>Your Order</h3>
       <p>A delicious burger with the following ingredients:</p>
       <ul>{orderDetails()}</ul>
@@ -31,7 +29,7 @@ const OrderSummary = ({ children, order, totalPrice }) => {
       </p>
       <p>Continue to Checkout?</p>
       {children}
-    </Aux>
+    </>
   );
 };
 
