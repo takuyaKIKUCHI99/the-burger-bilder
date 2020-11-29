@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Backdrop from '../../../components/UI/Backdrop/Backdrop';
+
 import styles from './Modal.module.css';
 
-const Modal = ({ isModalOpen, backdrop, orderSummary }) => {
+const Modal = ({ isModalOpen, children, closeModalHandler }) => {
   const translateStyle = {
     transform: isModalOpen ? 'translateY(0)' : 'translateY(-100vh)',
     opacity: isModalOpen ? '1' : '0'
@@ -11,9 +13,9 @@ const Modal = ({ isModalOpen, backdrop, orderSummary }) => {
 
   return (
     <>
-      {backdrop}
+      <Backdrop isOpen={isModalOpen} closeHandler={closeModalHandler} />
       <div className={styles.Modal} style={translateStyle}>
-        {orderSummary}
+        {children}
       </div>
     </>
   );
@@ -21,8 +23,8 @@ const Modal = ({ isModalOpen, backdrop, orderSummary }) => {
 
 Modal.propTypes = {
   isModalOpen: PropTypes.bool.isRequired,
-  backdrop: PropTypes.node.isRequired,
-  orderSummary: PropTypes.node.isRequired,
+  children: PropTypes.node,
+  closeModalHandler: PropTypes.func.isRequired,
 };
 
 export default Modal;

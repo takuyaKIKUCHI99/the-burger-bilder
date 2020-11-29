@@ -1,23 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import axios from '../../axios-orders';
 
-import { BURGER_BASE, PRICES } from '../../utils/constants';
+import { BURGER_BASE, BASE_PRICE, PRICES } from '../../utils/constants';
 
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
-import Backdrop from '../../components/UI/Backdrop/Backdrop';
 import Button from '../../components/UI/Button/Button';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
 const BurgerBuilder = () => {
   // ------------ States --------------
   const [ingredients, setIngredients] = useState(BURGER_BASE);
-  const [totalPrice, setTotalPrice] = useState(4.0);
+  const [totalPrice, setTotalPrice] = useState(BASE_PRICE);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+
+  // ----------- Effects --------------
+  // Error handling
+  useEffect(() => {
+    axios.interceptors.response.use(
+      (response) => response,
+      (error) => {
+        setErrorMessage(error.message);
+        setIsModalOpen(true);
+        return Promise.reject(error);
+      }
+    );
+    return setErrorMessage(null);
+  }, []);
 
   // ----------- Handlers ------------
   /**
@@ -50,7 +65,10 @@ const BurgerBuilder = () => {
   };
 
   const showModalHandler = () => setIsModalOpen(true);
-  const closeModalHandler = () => setIsModalOpen(false);
+  const closeModalHandler = () => {
+    setIsModalOpen(false);
+    setErrorMessage(null);
+  };
 
   const orderHandler = () => {
     setIsLoading(true);
@@ -60,45 +78,44 @@ const BurgerBuilder = () => {
         ingredients,
         price: totalPrice
       })
-      .then((response) => {
+      .then(() => {
         setIsLoading(false);
         setIsModalOpen(false);
-        setIngredients(BURGER_BASE); // Reset burger order
+        setIngredients(BURGER_BASE);
+        setTotalPrice(BASE_PRICE);
       })
-      .catch((error) => {
+      .catch(() => {
         setIsLoading(false);
-        setIsModalOpen(false);
-        alert(error);
       });
   };
 
   // --------- JSX ------------
-  const orderSummaryModal = () => (
-    <Modal
-      isModalOpen={isModalOpen}
-      backdrop={
-        <Backdrop isOpen={isModalOpen} closeHandler={closeModalHandler} />
-      }
-      orderSummary={
-        isLoading ? (
-          <Spinner />
-        ) : (
-          <OrderSummary order={ingredients} totalPrice={totalPrice}>
-            <Button buttonType='Danger' clicked={closeModalHandler}>
-              Cancel
-            </Button>
-            <Button buttonType='Success' clicked={orderHandler}>
-              Continue
-            </Button>
-          </OrderSummary>
-        )
-      }
-    />
+  const orderSummaryModal = (
+    <Modal isModalOpen={isModalOpen} closeModalHandler={closeModalHandler}>
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <OrderSummary order={ingredients} totalPrice={totalPrice}>
+          <Button buttonType='Danger' clicked={closeModalHandler}>
+            Cancel
+          </Button>
+          <Button buttonType='Success' clicked={orderHandler}>
+            Continue
+          </Button>
+        </OrderSummary>
+      )}
+    </Modal>
+  );
+
+  const errorModal = (
+    <Modal isModalOpen={isModalOpen} closeModalHandler={closeModalHandler}>
+      {errorMessage}
+    </Modal>
   );
 
   return (
     <>
-      {orderSummaryModal()}
+      {errorMessage ? errorModal : orderSummaryModal}
       <Burger ingredientsOrder={ingredients} />
       <BuildControls
         addIngredientHandler={addIngredientHandler}

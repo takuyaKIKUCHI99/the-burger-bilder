@@ -5,6 +5,8 @@ const BURGER_BASE = {
   meat: 0
 }
 
+const BASE_PRICE = 4.0;
+
 const INGREDIENTS = {
   'bread-bottom': 'BreadBottom',
   'bread-top': 'BreadTop',
@@ -22,6 +24,7 @@ const PRICES = {
 };
 
 export {
+  BASE_PRICE,
   BURGER_BASE,
   INGREDIENTS,
   PRICES
