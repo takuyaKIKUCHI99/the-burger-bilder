@@ -25,7 +25,7 @@ const BurgerBuilder = () => {
   // ----------- Effects --------------
   // Error handling
   useEffect(() => {
-    axios.interceptors.response.use(
+    const errorInterceptor = axios.interceptors.response.use(
       (response) => response,
       (error) => {
         setErrorMessage(error.message);
@@ -33,6 +33,7 @@ const BurgerBuilder = () => {
         return Promise.reject(error);
       }
     );
+    axios.interceptors.request.eject(errorInterceptor);
   }, []);
 
   // Fetch base-burger
