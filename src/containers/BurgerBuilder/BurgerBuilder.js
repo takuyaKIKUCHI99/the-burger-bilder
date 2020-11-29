@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import axios from '../../axios-orders';
 
-import { BURGER_BASE, BASE_PRICE, PRICES } from '../../utils/constants';
+import { BASE_PRICE, PRICES } from '../../utils/constants';
 
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
@@ -13,14 +13,26 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 
 const BurgerBuilder = () => {
   // ------------ States --------------
-  const [ingredients, setIngredients] = useState(BURGER_BASE);
+  const [ingredients, setIngredients] = useState(null);
   const [totalPrice, setTotalPrice] = useState(BASE_PRICE);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
+  const burgerBaseRef = useRef(null);
+
   // ----------- Effects --------------
+  // Fetch base-burger
+  useEffect(() => {
+    axios.get('/burger-base.json')
+      .then((response) => {
+        setIngredients(response.data);
+        burgerBaseRef.current = response.data;
+      })
+      .catch(() => setIsLoading(false))
+  }, []);
+
   // Error handling
   useEffect(() => {
     axios.interceptors.response.use(
@@ -31,7 +43,6 @@ const BurgerBuilder = () => {
         return Promise.reject(error);
       }
     );
-    return setErrorMessage(null);
   }, []);
 
   // ----------- Handlers ------------
@@ -81,7 +92,7 @@ const BurgerBuilder = () => {
       .then(() => {
         setIsLoading(false);
         setIsModalOpen(false);
-        setIngredients(BURGER_BASE);
+        setIngredients(burgerBaseRef.current);
         setTotalPrice(BASE_PRICE);
       })
       .catch(() => {
@@ -115,15 +126,21 @@ const BurgerBuilder = () => {
 
   return (
     <>
-      {errorMessage ? errorModal : orderSummaryModal}
-      <Burger ingredientsOrder={ingredients} />
-      <BuildControls
-        addIngredientHandler={addIngredientHandler}
-        removeIngredientHandler={removeIngredientHandler}
-        totalPrice={totalPrice}
-        ingredients={ingredients}
-        showModalHandler={showModalHandler}
-      />
+      {
+        ingredients
+          ? <>
+            { errorMessage ? errorModal : orderSummaryModal}
+            <Burger ingredientsOrder={ingredients} />
+            <BuildControls
+              addIngredientHandler={addIngredientHandler}
+              removeIngredientHandler={removeIngredientHandler}
+              totalPrice={totalPrice}
+              ingredients={ingredients}
+              showModalHandler={showModalHandler}
+            />
+          </>
+          : <Spinner />
+      }
     </>
   );
 };

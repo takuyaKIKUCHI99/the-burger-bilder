@@ -35,8 +35,13 @@ const OrderSummary = ({ children, order, totalPrice }) => {
 
 OrderSummary.propTypes = {
   children: PropTypes.node.isRequired,
-  order: PropTypes.object.isRequired,
+  order: PropTypes.object,
   totalPrice: PropTypes.number.isRequired
+};
+
+
+OrderSummary.defaultProps = {
+  order: null
 };
 
 export default OrderSummary;

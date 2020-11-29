@@ -1,10 +1,3 @@
-const BURGER_BASE = {
-  salad: 0,
-  bacon: 0,
-  cheese: 0,
-  meat: 0
-}
-
 const BASE_PRICE = 4.0;
 
 const INGREDIENTS = {
@@ -25,7 +18,6 @@ const PRICES = {
 
 export {
   BASE_PRICE,
-  BURGER_BASE,
   INGREDIENTS,
   PRICES
 };
