@@ -23,16 +23,6 @@ const BurgerBuilder = () => {
   const burgerBaseRef = useRef(null);
 
   // ----------- Effects --------------
-  // Fetch base-burger
-  useEffect(() => {
-    axios.get('/burger-base.json')
-      .then((response) => {
-        setIngredients(response.data);
-        burgerBaseRef.current = response.data;
-      })
-      .catch(() => setIsLoading(false))
-  }, []);
-
   // Error handling
   useEffect(() => {
     axios.interceptors.response.use(
@@ -43,6 +33,17 @@ const BurgerBuilder = () => {
         return Promise.reject(error);
       }
     );
+  }, []);
+
+  // Fetch base-burger
+  useEffect(() => {
+    axios
+      .get('/burger-base.json')
+      .then((response) => {
+        setIngredients(response.data);
+        burgerBaseRef.current = response.data;
+      })
+      .catch(() => setIsLoading(false));
   }, []);
 
   // ----------- Handlers ------------
@@ -126,21 +127,27 @@ const BurgerBuilder = () => {
 
   return (
     <>
-      {
-        ingredients
-          ? <>
-            { errorMessage ? errorModal : orderSummaryModal}
-            <Burger ingredientsOrder={ingredients} />
-            <BuildControls
-              addIngredientHandler={addIngredientHandler}
-              removeIngredientHandler={removeIngredientHandler}
-              totalPrice={totalPrice}
-              ingredients={ingredients}
-              showModalHandler={showModalHandler}
-            />
-          </>
-          : <Spinner />
-      }
+      {ingredients ? (
+        <>
+          {errorMessage ? errorModal : orderSummaryModal}
+          <Burger ingredientsOrder={ingredients} />
+          <BuildControls
+            addIngredientHandler={addIngredientHandler}
+            removeIngredientHandler={removeIngredientHandler}
+            totalPrice={totalPrice}
+            ingredients={ingredients}
+            showModalHandler={showModalHandler}
+          />
+        </>
+      ) : (
+        <>
+          {errorMessage ? (
+            errorModal
+          ) : (
+            <p>There is something wrong! Please come back later!</p>
+          )}
+        </>
+      )}
     </>
   );
 };
