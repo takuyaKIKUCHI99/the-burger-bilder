@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useHistory } from "react-router-dom";
 
 import axios from '../../axios-orders';
 
@@ -12,6 +13,8 @@ import Button from '../../components/UI/Button/Button';
 import Spinner from '../../components/UI/Spinner/Spinner';
 
 const BurgerBuilder = () => {
+  const history = useHistory();
+  const burgerBaseRef = useRef(null);
   // ------------ States --------------
   const [ingredients, setIngredients] = useState(null);
   const [totalPrice, setTotalPrice] = useState(BASE_PRICE);
@@ -20,7 +23,6 @@ const BurgerBuilder = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
-  const burgerBaseRef = useRef(null);
 
   // ----------- Effects --------------
   // Error handling
@@ -84,22 +86,23 @@ const BurgerBuilder = () => {
   };
 
   const orderHandler = () => {
-    setIsLoading(true);
+    history.push('/checkout', { ingredients: ingredients });
+    // setIsLoading(true);
 
-    axios
-      .post('/orders.json', {
-        ingredients,
-        price: totalPrice
-      })
-      .then(() => {
-        setIsLoading(false);
-        setIsModalOpen(false);
-        setIngredients(burgerBaseRef.current);
-        setTotalPrice(BASE_PRICE);
-      })
-      .catch(() => {
-        setIsLoading(false);
-      });
+    // axios
+    //   .post('/orders.json', {
+    //     ingredients,
+    //     price: totalPrice
+    //   })
+    //   .then(() => {
+    //     setIsLoading(false);
+    //     setIsModalOpen(false);
+    //     setIngredients(burgerBaseRef.current);
+    //     setTotalPrice(BASE_PRICE);
+    //   })
+    //   .catch(() => {
+    //     setIsLoading(false);
+    //   });
   };
 
   // --------- JSX ------------
