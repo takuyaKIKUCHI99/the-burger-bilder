@@ -1,20 +1,24 @@
 import styles from './Checkout.module.css';
 
 import React from 'react';
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory, Route } from "react-router-dom";
 
 import Burger from '../Burger/Burger';
 import Button from '../UI/Button/Button';
+import CheckoutCustomerContact from './CheckoutCustomerContact/CheckoutCustomerContact';
 
 const Checkout = () => {
   const location = useLocation();
+  const history = useHistory();
+
+  const order = location?.state?.ingredients;
 
   const handleOnClickGoBack = () => {
-    // Do something
+    history.goBack();
   };
 
   const handleOnClickContinue = () => {
-    // Do something
+    history.push('/checkout/customer-contact');
   };
 
   const buttons = (
@@ -31,8 +35,9 @@ const Checkout = () => {
   return (
     <div className={styles.Checkout}>
       <h1>We hope you enjoy our burger!!</h1>
-      <Burger ingredientsOrder={location.state.ingredients} />
+      <Burger ingredientsOrder={order} />
       {buttons}
+      <Route path="/checkout/customer-contact" component={CheckoutCustomerContact} />
     </div>
   )
 };
