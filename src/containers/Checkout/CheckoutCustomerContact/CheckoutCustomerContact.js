@@ -6,8 +6,8 @@ import PropTypes from 'prop-types';
 
 import axios from '../../../axios-orders';
 
-import Button from '../../UI/Button/Button';
-import Spinner from '../../UI/Spinner/Spinner';
+import Button from '../../../components/UI/Button/Button';
+import Spinner from '../../../components/UI/Spinner/Spinner';
 
 const CheckoutCustomerContact = ({ order, totalPrice }) => {
   const history = useHistory();

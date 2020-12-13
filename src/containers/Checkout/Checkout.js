@@ -3,8 +3,8 @@ import styles from './Checkout.module.css';
 import React from 'react';
 import { useLocation, useHistory, Route } from 'react-router-dom';
 
-import Burger from '../Burger/Burger';
-import Button from '../UI/Button/Button';
+import Burger from '../../components/Burger/Burger';
+import Button from '../../components/UI/Button/Button';
 import CheckoutCustomerContact from './CheckoutCustomerContact/CheckoutCustomerContact';
 
 const Checkout = () => {
