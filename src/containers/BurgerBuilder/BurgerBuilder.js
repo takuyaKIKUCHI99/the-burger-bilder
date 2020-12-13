@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useHistory } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 
 import axios from '../../axios-orders';
 
@@ -22,7 +22,6 @@ const BurgerBuilder = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
-
 
   // ----------- Effects --------------
   // Error handling
@@ -86,23 +85,10 @@ const BurgerBuilder = () => {
   };
 
   const orderHandler = () => {
-    history.push('/checkout', { ingredients: ingredients });
-    // setIsLoading(true);
-
-    // axios
-    //   .post('/orders.json', {
-    //     ingredients,
-    //     price: totalPrice
-    //   })
-    //   .then(() => {
-    //     setIsLoading(false);
-    //     setIsModalOpen(false);
-    //     setIngredients(burgerBaseRef.current);
-    //     setTotalPrice(BASE_PRICE);
-    //   })
-    //   .catch(() => {
-    //     setIsLoading(false);
-    //   });
+    history.push('/checkout', {
+      ingredients: ingredients,
+      totalPrice: totalPrice
+    });
   };
 
   // --------- JSX ------------
