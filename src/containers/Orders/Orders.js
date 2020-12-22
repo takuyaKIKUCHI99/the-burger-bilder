@@ -8,6 +8,7 @@ import Spinner from '../../components/UI/Spinner/Spinner';
 const Orders = () => {
   const [orders, setOrders] = useState(null);
   const [keys, setKeys] = useState(null);
+  const [values, setValues] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   // Fetch orders
@@ -16,7 +17,6 @@ const Orders = () => {
     axios
       .get('/orders.json')
       .then((response) => {
-        console.log(response); // Todo: remove
         setOrders(response.data);
         setIsLoading(false)
       })
@@ -26,13 +26,16 @@ const Orders = () => {
   useEffect(() => {
     if (!orders) return;
     setKeys(Object.keys(orders));
+    setValues(Object.values(orders));
   }, [orders]);
 
   const orderList = () => {
     if (!orders) return <p>There is no orders yet!</p>;
     return (
       <ul>
-        {keys.map((key) => <Order key={key} order={orders.key}/>)}
+        {keys.map((key, index) => {
+          return <Order key={key} order={values[index]} />;
+        })}
       </ul>
     );
   };
