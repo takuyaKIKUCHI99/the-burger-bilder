@@ -1,4 +1,6 @@
-import React, {useState, useEffect} from 'react';
+import styles from './Orders.module.css';
+
+import React, { useState, useEffect } from 'react';
 
 import axios from '../../axios-orders';
 
@@ -32,7 +34,7 @@ const Orders = () => {
   const orderList = () => {
     if (!orders) return <p>There is no orders yet!</p>;
     return (
-      <ul>
+      <ul className={styles.Orders}>
         {keys.map((key, index) => {
           return <Order key={key} order={values[index]} />;
         })}
