@@ -32,7 +32,7 @@ const Order = ({ order }) => {
 
   return (
     <div className={styles.Order}>
-      <div>Ingredients: {ingredientsMapping()}</div>
+      <div className={styles.OrderLine}>Ingredients: {ingredientsMapping()}</div>
       <div>
         <span>Price: USD{order.price.toFixed(2)}</span>
       </div>

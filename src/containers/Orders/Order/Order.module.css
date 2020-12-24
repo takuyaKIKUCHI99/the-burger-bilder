@@ -7,6 +7,10 @@
   box-sizing: border-box;
 }
 
+.OrderLine {
+  margin-bottom: 0.5rem;
+}
+
 .Ingredients {
   display: inline-block;
   padding: 5px;
