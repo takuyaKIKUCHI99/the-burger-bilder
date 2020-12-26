@@ -5,7 +5,7 @@ import { useLocation, useHistory, Route } from 'react-router-dom';
 
 import Burger from '../../components/Burger/Burger';
 import Button from '../../components/UI/Button/Button';
-import CheckoutCustomerContact from './CheckoutCustomerContact/CheckoutCustomerContact';
+import CheckoutCustomerContact from './CustomerContact/CustomerContact';
 
 const Checkout = () => {
   const location = useLocation();

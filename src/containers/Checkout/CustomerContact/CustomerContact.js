@@ -1,4 +1,4 @@
-import styles from './CheckoutCustomerContact.module.css';
+import styles from './CustomerContact.module.css';
 
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -7,7 +7,10 @@ import PropTypes from 'prop-types';
 import axios from '../../../axios-orders';
 
 import Button from '../../../components/UI/Button/Button';
+import Input from '../../../components/UI/Input/Input';
 import Spinner from '../../../components/UI/Spinner/Spinner';
+
+import { CONTACT_INPUTS } from '../../../utils/constants';
 
 const CheckoutCustomerContact = ({ order, totalPrice }) => {
   const history = useHistory();
@@ -32,29 +35,14 @@ const CheckoutCustomerContact = ({ order, totalPrice }) => {
       });
   };
 
+  const inputs = (
+    CONTACT_INPUTS.map((options) => <Input key={options.name} {...options}></Input>)
+  )
+
   const contactForm = (
     <form className={styles.Contact}>
-      <h2>Please fill your contact information</h2>
-      <input
-        type='text'
-        name='name'
-        className={styles.Input}
-        placeholder='Your Name'></input>
-      <input
-        type='text'
-        name='email'
-        className={styles.Input}
-        placeholder='Your Email'></input>
-      <input
-        type='text'
-        name='address'
-        className={styles.Input}
-        placeholder='Your Address'></input>
-      <input
-        type='text'
-        name='phone'
-        className={styles.Input}
-        placeholder='Your Phone no.'></input>
+      <label className={styles.Label}>Enter your Contact Data</label>
+      {inputs}
       <Button buttonType='Success' clicked={handleOrder}>
         Order
       </Button>
